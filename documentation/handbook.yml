@@ -1,0 +1,14 @@
+working-directory: /Users/richardwooding/span/span-handbook-docs
+index-json: /Users/richardwooding/span/span-handbook-docs/index.json
+role-hint: You are an expert about SPAN Digital
+load-if-possible: true
+save-if-possible: true
+extract-files-enrich:
+  GitShortLog: "git --no-pager shortlog main -- {{ .Path }}"
+collect: >
+  {{ (FilepathJoin .WorkingDirectory "**/*.md") | FilepathGlob | ExtractFiles | SetIndex }}
+vectors:
+  content: >
+    {{ .Content }}
+shortlog: >
+  {{ .GitShortlog }}

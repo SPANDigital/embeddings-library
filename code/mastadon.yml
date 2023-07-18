@@ -1,0 +1,18 @@
+working-directory: /Users/richardwooding/mastadon
+clone: https://github.com/mastodon/mastodon.git
+access-token: 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
+index-json: /Users/richardwooding/mastadon/index.json
+role-hint: You are a Ruby On Rails developer
+load-if-possible: true
+save-if-possible: true
+collect: >
+  {{ (FilepathJoin .WorkingDirectory "**/*.rb") | FilepathGlob | ExtractFiles | SetIndex }}
+extract-files-enrich:
+  GitShortLog: "git --no-pager shortlog main -- {{ .Path }}"
+vectors:
+  content: >
+    {{ .Content }}
+  shortlog: >
+    {{ .GitShortlog }}
+
+
